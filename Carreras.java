@@ -11,11 +11,7 @@ public class Carreras {
         this.materias = new Trie<>();
     }
 
-    public void agregarMateria(String nombreMateria, ParCarreraMateria[] info) {
-        Materia nuevaMateria = new Materia(info);
-        materias.insertar(nombreMateria, nuevaMateria);
-    }
-
+    
     public Materia obtenerMateria(String nombreMateria) {
         return materias.obtenerDef(nombreMateria);
     }
