@@ -1,4 +1,4 @@
-//modificaciones necesarias para que funcione todo ok con los cambios de la clase materia 
+//modificaciones necesarias para que funcione todo ok con los cambios de la clase materia
 package aed;
 
 import java.util.ArrayList;
@@ -162,3 +162,39 @@ public class SistemaSIU {
         return 0;
     }
 }
+
+/*
+Constructor: SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias)
+InvRep:
++Todos los estudiantes en libretasUniversitarias deben estar en el Trie de estudiantes con el valor inicial de 0.
++Cada carrera mencionada en infoMaterias debe estar en el Trie de carreras y contener las materias correspondientes.
+Método: inscribir(String estudiante, String carrera, String materia)
+InvRep:
++El estudiante debe estar en el Trie de estudiantes y su número de inscripciones debe ser correcto.
++La materia debe tener al estudiante agregado correctamente.
+ Método: agregarDocente(CargoDocente cargo, String carrera, String materia)
+InvRep:
++El docente debe estar correctamente agregado a la materia dentro de la carrera.
+ Método: plantelDocente(String materia, String carrera)
+InvRep:
++Debe devolver la cantidad correcta de docentes por cada tipo para la materia específica.
+Método: cerrarMateria(String materia, String carrera)
+InvRep:
++La materia debe ser removida de la carrera especificada.
++Las inscripciones de los estudiantes deben actualizarse correctamente.
+ Método: inscriptos(String materia, String carrera)
+InvRep:
++Debe devolver el número correcto de estudiantes inscritos en la materia específica.
+Método: excedeCupo(String materia, String carrera)
+InvRep:
++Debe indicar correctamente si el número de estudiantes inscritos en la materia excede el cupo.
+ Método: carreras()
+InvRep:
++Debe devolver un arreglo alfabéticamente ordenado con todas las carreras del sistema.
+Método: materias(String carrera)
+InvRep:
++Debe devolver un arreglo alfabéticamente ordenado con todas las materias de la carrera específica.
+Método: materiasInscriptas(String estudiante)
+InvRep:
++Debe devolver el número correcto de materias en las que el estudiante está inscrito.
+*/
