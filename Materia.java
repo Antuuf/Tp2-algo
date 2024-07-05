@@ -42,6 +42,7 @@ public class Materia {
             this.docentes[3]++;
         }
     }
+    // Aca arreglé esta parte para que se agreguen bien los docentes
 
     public int[] obtenerDocentes(){
         return this.docentes;
@@ -62,10 +63,10 @@ public class Materia {
     public boolean excedeCupo() {
         int cant = obtenerCantidadAlumnos();
         return (docentes[0] * 250 < cant) || (docentes[1] * 100 < cant) || (docentes[2] * 20 < cant) || (docentes[3] * 30 < cant);
-    }
+    }  // no entendi la corrección que nos hicieron acá, porque esto funciona bien. Será que quiere que tomemos el mínimo de todos estos valores y sólo comparemos ese con la cantidad de alumnos, en lugar de comparar todos. Bueno en todo caso igual es facil de cambiar 
    
 
- // Método para obtener todas las materias equivalentes por nombre
+ // Método para obtener todas las materias equivalentes por nombre. Esto lo uso en CerrarMateria 
  public String[] obtenerNombresEquivalentes() {
     String[] nombres = new String[otrosNombres.length];
     for (int i = 0; i < otrosNombres.length; i++) {
