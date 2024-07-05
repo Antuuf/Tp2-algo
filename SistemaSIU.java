@@ -1,5 +1,7 @@
+//modificaciones necesarias para que funcione todo ok con los cambios de la clase materia 
 package aed;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SistemaSIU {
@@ -10,7 +12,7 @@ public class SistemaSIU {
         AY2, AY1, JTP, PROF
     }
 
-    // constructor con InfoMateria y libretas universitarias
+    // Constructor con InfoMateria y libretas universitarias
     public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias) {
         this.estudiantes = new Trie<>();
         for (String libreta : libretasUniversitarias) {
@@ -20,8 +22,9 @@ public class SistemaSIU {
         this.carreras = new Trie<>();
         for (InfoMateria info : infoMaterias) {
             ParCarreraMateria[] parCarreraMaterias = info.getParesCarreraMateria();
-            Materia mismaMateria = new Materia(parCarreraMaterias);
+            Materia mismaMateria = new Materia();
             for (ParCarreraMateria par : parCarreraMaterias) {
+                mismaMateria.agregarParCarreraMateria(par);
                 String carrera = par.getCarrera();
                 String materia = par.getNombreMateria();
                 if (!carreras.pertenece(carrera)) {
@@ -77,19 +80,18 @@ public class SistemaSIU {
         return new int[]{0, 0, 0, 0};
     }
 
-   
     public void cerrarMateria(String materia, String carrera) {
         Trie<Materia> carrerasTrie = carreras.obtenerDef(carrera);
         if (carrerasTrie != null) {
             Materia mat = carrerasTrie.obtenerDef(materia);
-            
+
             if (mat != null) {
                 // Borrar la materia de la carrera actual
                 carrerasTrie.borrar(materia);
-    
+
                 // Obtener todos los nombres equivalentes de la materia
                 String[] nombresEquivalentes = mat.obtenerNombresEquivalentes();
-                
+
                 // Recorrer todas las carreras y borrar las materias equivalentes
                 List<String> todasLasCarreras = carreras.obtenerClaves();
                 for (String otraCarrera : todasLasCarreras) {
@@ -104,18 +106,10 @@ public class SistemaSIU {
                         }
                     }
                 }
-    
-                // Vaciar el plantel docente. Bueno esto lo estuve revisando y creo que no es necesario porque ya se elimina la materia. 
-                int[] docentes = mat.obtenerDocentes();
-                for (int i = 0; i < docentes.length; i++) {
-                    docentes[i] = 0;
-                }
 
                 // Decrementar inscripciones en 1 para cada estudiante inscrito en la materia
-                ListaEnlazada<String> estudiantesInscritos = mat.obtenerListaAlumnos();
-                Iterador<String> iterador = estudiantesInscritos.iterador();
-                while (iterador.haySiguiente()) {
-                    String estudiante = iterador.siguiente();
+                ArrayList<String> estudiantesInscritos = mat.obtenerListaAlumnos();
+                for (String estudiante : estudiantesInscritos) {
                     if (estudiantes.pertenece(estudiante)) {
                         int inscripciones = estudiantes.obtenerDef(estudiante);
                         estudiantes.insertar(estudiante, inscripciones - 1);
@@ -124,11 +118,6 @@ public class SistemaSIU {
             }
         }
     }
-    
-                    
-                    
-
-
 
     public int inscriptos(String materia, String carrera) {
         Trie<Materia> car = carreras.obtenerDef(carrera);
@@ -153,7 +142,7 @@ public class SistemaSIU {
     }
 
     public String[] carreras() {
-        List<String> listaCarreras = carreras.obtenerClaves(); 
+        List<String> listaCarreras = carreras.obtenerClaves();
         return listaCarreras.toArray(new String[0]);
     }
 
