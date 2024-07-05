@@ -105,12 +105,12 @@ public class SistemaSIU {
                     }
                 }
     
-                // Vaciar el plantel docente
+                // Vaciar el plantel docente. Bueno esto lo estuve revisando y creo que no es necesario porque ya se elimina la materia. 
                 int[] docentes = mat.obtenerDocentes();
                 for (int i = 0; i < docentes.length; i++) {
                     docentes[i] = 0;
                 }
-    
+
                 // Decrementar inscripciones en 1 para cada estudiante inscrito en la materia
                 ListaEnlazada<String> estudiantesInscritos = mat.obtenerListaAlumnos();
                 Iterador<String> iterador = estudiantesInscritos.iterador();
