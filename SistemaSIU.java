@@ -1,7 +1,5 @@
-//modificaciones necesarias para que funcione todo ok con los cambios de la clase materia
 package aed;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SistemaSIU {
@@ -12,7 +10,6 @@ public class SistemaSIU {
         AY2, AY1, JTP, PROF
     }
 
-    // Constructor con InfoMateria y libretas universitarias
     public SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias) {
         this.estudiantes = new Trie<>();
         for (String libreta : libretasUniversitarias) {
@@ -24,9 +21,9 @@ public class SistemaSIU {
             ParCarreraMateria[] parCarreraMaterias = info.getParesCarreraMateria();
             Materia mismaMateria = new Materia();
             for (ParCarreraMateria par : parCarreraMaterias) {
-                mismaMateria.agregarParCarreraMateria(par);
                 String carrera = par.getCarrera();
                 String materia = par.getNombreMateria();
+                mismaMateria.agregarNombreEquivalente(materia);
                 if (!carreras.pertenece(carrera)) {
                     Trie<Materia> materiaCarrera = new Trie<>();
                     mismaMateria.agregarReferencia(materiaCarrera);
@@ -86,29 +83,23 @@ public class SistemaSIU {
             Materia mat = carrerasTrie.obtenerDef(materia);
 
             if (mat != null) {
-                // Borrar la materia de la carrera actual
                 carrerasTrie.borrar(materia);
 
-                // Obtener todos los nombres equivalentes de la materia
-                String[] nombresEquivalentes = mat.obtenerNombresEquivalentes();
+                List<String> nombresEquivalentes = mat.obtenerNombresEquivalentes();
 
-                // Recorrer todas las carreras y borrar las materias equivalentes
                 List<String> todasLasCarreras = carreras.obtenerClaves();
                 for (String otraCarrera : todasLasCarreras) {
-                    if (!otraCarrera.equals(carrera)) {
-                        Trie<Materia> otraCarreraTrie = carreras.obtenerDef(otraCarrera);
-                        if (otraCarreraTrie != null) {
-                            for (String nombreEquivalente : nombresEquivalentes) {
-                                if (otraCarreraTrie.pertenece(nombreEquivalente)) {
-                                    otraCarreraTrie.borrar(nombreEquivalente);
-                                }
+                    Trie<Materia> otraCarreraTrie = carreras.obtenerDef(otraCarrera);
+                    if (otraCarreraTrie != null) {
+                        for (String nombreEquivalente : nombresEquivalentes) {
+                            if (otraCarreraTrie.pertenece(nombreEquivalente)) {
+                                otraCarreraTrie.borrar(nombreEquivalente);
                             }
                         }
                     }
                 }
 
-                // Decrementar inscripciones en 1 para cada estudiante inscrito en la materia
-                ArrayList<String> estudiantesInscritos = mat.obtenerListaAlumnos();
+                List<String> estudiantesInscritos = mat.obtenerListaAlumnos();
                 for (String estudiante : estudiantesInscritos) {
                     if (estudiantes.pertenece(estudiante)) {
                         int inscripciones = estudiantes.obtenerDef(estudiante);
@@ -162,39 +153,3 @@ public class SistemaSIU {
         return 0;
     }
 }
-
-/*
-Constructor: SistemaSIU(InfoMateria[] infoMaterias, String[] libretasUniversitarias)
-InvRep:
-+Todos los estudiantes en libretasUniversitarias deben estar en el Trie de estudiantes con el valor inicial de 0.
-+Cada carrera mencionada en infoMaterias debe estar en el Trie de carreras y contener las materias correspondientes.
-Método: inscribir(String estudiante, String carrera, String materia)
-InvRep:
-+El estudiante debe estar en el Trie de estudiantes y su número de inscripciones debe ser correcto.
-+La materia debe tener al estudiante agregado correctamente.
- Método: agregarDocente(CargoDocente cargo, String carrera, String materia)
-InvRep:
-+El docente debe estar correctamente agregado a la materia dentro de la carrera.
- Método: plantelDocente(String materia, String carrera)
-InvRep:
-+Debe devolver la cantidad correcta de docentes por cada tipo para la materia específica.
-Método: cerrarMateria(String materia, String carrera)
-InvRep:
-+La materia debe ser removida de la carrera especificada.
-+Las inscripciones de los estudiantes deben actualizarse correctamente.
- Método: inscriptos(String materia, String carrera)
-InvRep:
-+Debe devolver el número correcto de estudiantes inscritos en la materia específica.
-Método: excedeCupo(String materia, String carrera)
-InvRep:
-+Debe indicar correctamente si el número de estudiantes inscritos en la materia excede el cupo.
- Método: carreras()
-InvRep:
-+Debe devolver un arreglo alfabéticamente ordenado con todas las carreras del sistema.
-Método: materias(String carrera)
-InvRep:
-+Debe devolver un arreglo alfabéticamente ordenado con todas las materias de la carrera específica.
-Método: materiasInscriptas(String estudiante)
-InvRep:
-+Debe devolver el número correcto de materias en las que el estudiante está inscrito.
-*/
