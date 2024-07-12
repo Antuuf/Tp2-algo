@@ -213,48 +213,48 @@ public class SistemaSIU {
  -
 
 
- InvReps de los metodos 
+ InvReps de los Métodos 
  
-Metodo inscribir
+Método inscribir
 El estudiante identificado por estudianteLU debe existir en el Trie de estudiantes.
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
 La materia identificada por materiaNombre debe estar asociada a la carrera en el Trie.
 El número de materias inscriptas del estudiante debe incrementarse después de la inscripción.
 
-Metodo AgregarDocente
+Método AgregarDocente
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
 La materia identificada por materiaNombre debe estar asociada a la carrera.
 La cantidad de docentes de cada tipo para esa materia debe incrementarse en función del cargo.
 
-Metodo PlantelDocente
+Método PlantelDocente
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
 La materia identificada por materiaNombre debe estar asociada a la carrera.
 El resultado debe ser un arreglo que contiene el número de docentes por cada tipo (PROFE, JTP, AY1, AY2).
 
-Metodo CerrarMateria
+Método CerrarMateria
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
 La materia identificada por materiaNombre debe estar asociada a la carrera.
 Al cerrar una materia, todas las materias equivalentes en otras carreras deben ser eliminadas.
 El número de materias inscriptas por cada estudiante que estaba inscrito en la materia cerrada debe decrecer.
 
-Metodo Inscriptos
+Método Inscriptos
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
 La materia identificada por materiaNombre debe estar asociada a la carrera.
 El resultado debe ser la cantidad de estudiantes inscritos en la materia.
 
-Metodo Excedecupo
+Método Excedecupo
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
 La materia identificada por materiaNombre debe estar asociada a la carrera.
 El resultado debe ser un booleano que indica si el número de inscriptos excede el cupo permitido.
 
-Metodo Carreras
-El resultado debe ser un arreglo ordenado alfabeticamente que contiene todos los nombres de las carreras almacenadas en el Trie, cada uno único.
+Método Carreras
+El resultado debe ser un arreglo ordenado alfabéticamente que contiene todos los nombres de las carreras almacenadas en el Trie, cada uno único.
 
-Metodo materias 
+Método materias 
 La carrera identificada por carreraNombre debe existir en el Trie de carreras.
-El resultado debe ser un arreglo ordenado alfabeticamente que contiene todos los nombres de las materias asociadas a la carrera, cada uno único.
+El resultado debe ser un arreglo ordenado alfabéticamente que contiene todos los nombres de las materias asociadas a la carrera, cada uno único.
 
-Metodo materiasInscriptas
+Método materiasInscriptas
 El estudiante identificado por estudianteLU debe existir en el Trie de estudiantes.
 El resultado debe ser el número de materias en las que el estudiante está inscrito.
  */
