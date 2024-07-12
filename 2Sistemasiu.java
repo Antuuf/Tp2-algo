@@ -36,6 +36,11 @@ public class SistemaSIU {
             }
         }
     }
+// Obtener carrera del trie carreras tiene complejidad O(|c|).
+// Obtener materia del trie car tiene complejidad O(|m|).
+// Procesar equivalentes y cerrar materia depende del número de equivalentes y estudiantes inscritos, O(∑m∈M ∑n∈Nm​ ∣n∣ + Em)
+// Por lo tanto, O(∑c∈C​ ∣c∣ ⋅ ∣Mc∣ + ∑m∈M ∑n∈Nm​ ∣n∣ + Em).
+
 
     public void inscribir(String estudianteLU, String carreraNombre, String materiaNombre) {
         Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
@@ -49,6 +54,11 @@ public class SistemaSIU {
         }
     }
 
+    /* Buscar Carrera en el trie trae complejidad O(|C|)
+     * Buscar Materia en el trie de la carrera trae complejidad O (M)
+     * Complejidad esperada: O(|C| + |M|)
+     */
+
     public void agregarDocente(CargoDocente cargo, String carreraNombre, String materiaNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
         if (carrera != null) {
@@ -58,7 +68,13 @@ public class SistemaSIU {
             }
         }
     }
-
+/*
+ * Se busca la carrera en el trie de carreras, complejidad O(|C|)
+ * Se busca la  materia en el trie de la carrera, complejidad O(|M|)
+ * Se agrega el docente a la materia, complejidad O(1)
+ * Complejidad esperada: O(|C| + |M|)
+ * 
+ */
     public int[] plantelDocente(String materiaNombre, String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
         if (carrera != null) {
@@ -69,7 +85,12 @@ public class SistemaSIU {
         }
         return new int[]{0, 0, 0, 0};
     }
-
+/*
+ * Se busca la carrera en el trie de carreras, complejidad O(|C|)
+ * Se busca la materia en el trie de la carrera, complejidad O(|M|)
+ * Se obtiene el arreglo de docentes, complejidad O(1)
+ * Complejjidad esperada: O(|C|+ |M|)
+ */
     public void cerrarMateria(String materiaNombre, String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
         if (carrera != null) {
@@ -99,6 +120,14 @@ public class SistemaSIU {
         }
     }
 
+    /*
+     * Obtener carrera del trie carreras trae complejidad O(|C|)
+     * Se busca la materia en el trie de la carrera, complejidad O(|M|)
+     * Se elimina la materia de la carrera y sus equivalentes en otras carreras, complejidad O(∑∣nm∣)
+     * Se decrementa la cantidad de inscripciones de los estudiantes de la materia, complejidad O(Em)
+     * Complejidad esperada O(|C|+ |M| + ∑∣n∣ + Em )
+     */
+
     public int inscriptos(String materiaNombre, String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
         if (carrera != null) {
@@ -109,6 +138,12 @@ public class SistemaSIU {
         }
         return 0;
     }
+/* 
+ * Se busca la carrera en el trie carreras, complejidad O(|C|)
+ * Se busca la materia en el trie de la carrera, complejidad O(|M|)
+ * Se obtiene la cantidad de inscriptos, complejidad O(1)
+ * Complejidad esperada: O(|C| + |M|)
+ */
 
     public boolean excedeCupo(String materiaNombre, String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
@@ -121,10 +156,22 @@ public class SistemaSIU {
         return false;
     }
 
+/* 
+ * Se busca la carrera en el trie de carreras, complejidad O(|C|)
+ * Se busca la materia en el trie de la carrera, complejidad O(|M|)
+ * Se compara la cantidad de inscriptos con el cupo de la materia, complejidad O(1)
+ * Complejidad esperada: O(|C|+|M|)
+ */
+
     public String[] carreras() {
         List<String> listaCarreras = carreras.obtenerClaves();
         return listaCarreras.toArray(new String[0]);
     }
+
+    /*
+     * Obtener todas las claves del trie carreras tiene complejidad O(∑ c∈C ∣c∣),
+     * Complejidad esperada: O(∑ c∈C ∣c∣)
+     */
 
     public String[] materias(String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
@@ -135,6 +182,12 @@ public class SistemaSIU {
         return new String[0];
     }
 
+    /*
+     * Obtener carrera del trie carreras trae complejidad O(|C|)
+     * Obtener todas las claves del trie de la carrera tiene complejidad O(∑ mc∈Mc ∣mc∣)
+     * Complejidad esperada:  O(∑ mc∈Mc ∣mc∣)
+     */
+
     public int materiasInscriptas(String estudianteLU) {
         Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
         if (estudiante != null) {
@@ -143,6 +196,11 @@ public class SistemaSIU {
         return 0;
     }
 }
+
+/*
+ * Obtener el valor del trie estudiantes tiene complejidad O(1)
+* Por lo tanto: O(1)
+ */
 
 
 /* Invrep CLASE sistema siu
