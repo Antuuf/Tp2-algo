@@ -42,17 +42,14 @@ public class SistemaSIU {
 // Por lo tanto, O(∑c∈C​ ∣c∣ ⋅ ∣Mc∣ + ∑m∈M ∑n∈Nm​ ∣n∣ + Em).
 
 
-    public void inscribir(String estudianteLU, String carreraNombre, String materiaNombre) {
-        Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
-        Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (estudiante != null && carrera != null) {
-            Materia materia = carrera.obtenerMateria(materiaNombre);
-            if (materia != null) {
-                estudiante.incrementarMateriasInscriptas();
-                materia.agregarAlumno(estudianteLU);
-            }
-        }
-    }
+public void inscribir(String estudianteLU, String carreraNombre, String materiaNombre) {
+    Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
+    Carrera carrera = carreras.obtenerDef(carreraNombre);
+    Materia materia = carrera.obtenerMateria(materiaNombre);
+    
+    estudiante.incrementarMateriasInscriptas();
+    materia.agregarAlumno(estudianteLU);
+}
 
     /*
     * Buscar al estudiante en el trie de estudiantes es complejidad O(1), ya que la longitud de las libretas es acotada 
@@ -62,14 +59,11 @@ public class SistemaSIU {
      * Complejidad esperada: O(|c| + |m|)
      */
 
-    public void agregarDocente(CargoDocente cargo, String carreraNombre, String materiaNombre) {
+     public void agregarDocente(CargoDocente cargo, String carreraNombre, String materiaNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (carrera != null) {
-            Materia materia = carrera.obtenerMateria(materiaNombre);
-            if (materia != null) {
-                materia.agregarDocente(cargo.toString());
-            }
-        }
+        Materia materia = carrera.obtenerMateria(materiaNombre);
+        
+        materia.agregarDocente(cargo.toString());
     }
 /*
  * Se busca la carrera en el trie de carreras, complejidad O(|c|)
@@ -78,50 +72,39 @@ public class SistemaSIU {
  * Complejidad esperada: O(|c| + |m|)
  * 
  */
-    public int[] plantelDocente(String materiaNombre, String carreraNombre) {
-        Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (carrera != null) {
-            Materia materia = carrera.obtenerMateria(materiaNombre);
-            if (materia != null) {
-                return materia.obtenerDocentes();
-            }
-        }
-        return new int[]{0, 0, 0, 0};
-    }
+public int[] plantelDocente(String materiaNombre, String carreraNombre) {
+    Carrera carrera = carreras.obtenerDef(carreraNombre);
+    Materia materia = carrera.obtenerMateria(materiaNombre);
+    
+    return materia.obtenerDocentes();
+}
 /*
  * Se busca la carrera en el trie de carreras, complejidad O(|c|)
  * Se busca la materia en el trie de la carrera, complejidad O(|m|)
  * Se obtiene el arreglo de docentes, complejidad O(1)
  * Complejjidad esperada: O(|c|+ |m|)
  */
-    public void cerrarMateria(String materiaNombre, String carreraNombre) {
-        Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (carrera != null) {
-            Materia materia = carrera.obtenerMateria(materiaNombre);
-            if (materia != null) {
-                carrera.eliminarMateria(materiaNombre);
-                List<String> nombresEquivalentes = materia.obtenerNombresEquivalentes();
-                List<String> todasLasCarreras = carreras.obtenerClaves();
+public void cerrarMateria(String materiaNombre, String carreraNombre) {
+    Carrera carrera = carreras.obtenerDef(carreraNombre);
+    Materia materia = carrera.obtenerMateria(materiaNombre);
+    
+    carrera.eliminarMateria(materiaNombre);
+    List<String> nombresEquivalentes = materia.obtenerNombresEquivalentes();
+    List<String> todasLasCarreras = carreras.obtenerClaves();
 
-                for (String otraCarreraNombre : todasLasCarreras) {
-                    Carrera otraCarrera = carreras.obtenerDef(otraCarreraNombre);
-                    if (otraCarrera != null) {
-                        for (String nombreEquivalente : nombresEquivalentes) {
-                            otraCarrera.eliminarMateria(nombreEquivalente);
-                        }
-                    }
-                }
-
-                List<String> estudiantesInscritos = materia.obtenerListaAlumnos();
-                for (String estudianteLU : estudiantesInscritos) {
-                    Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
-                    if (estudiante != null) {
-                        estudiante.decrementarMateriasInscriptas();
-                    }
-                }
-            }
+    for (String otraCarreraNombre : todasLasCarreras) {
+        Carrera otraCarrera = carreras.obtenerDef(otraCarreraNombre);
+        for (String nombreEquivalente : nombresEquivalentes) {
+            otraCarrera.eliminarMateria(nombreEquivalente);
         }
     }
+
+    List<String> estudiantesInscritos = materia.obtenerListaAlumnos();
+    for (String estudianteLU : estudiantesInscritos) {
+        Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
+        estudiante.decrementarMateriasInscriptas();
+    }
+}
 
     /*
      * Obtener carrera del trie carreras trae complejidad O(|c|)
@@ -131,15 +114,11 @@ public class SistemaSIU {
      * Complejidad esperada O(|c|+ |m| + (∑ (n∈Nm) ∣n∣) + Em )
      */
 
-    public int inscriptos(String materiaNombre, String carreraNombre) {
+     public int inscriptos(String materiaNombre, String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (carrera != null) {
-            Materia materia = carrera.obtenerMateria(materiaNombre);
-            if (materia != null) {
-                return materia.obtenerCantidadAlumnos();
-            }
-        }
-        return 0;
+        Materia materia = carrera.obtenerMateria(materiaNombre);
+        
+        return materia.obtenerCantidadAlumnos();
     }
 /* 
  * Se busca la carrera en el trie carreras, complejidad O(|c|)
@@ -148,17 +127,12 @@ public class SistemaSIU {
  * Complejidad esperada: O(|c| + |m|)
  */
 
-    public boolean excedeCupo(String materiaNombre, String carreraNombre) {
-        Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (carrera != null) {
-            Materia materia = carrera.obtenerMateria(materiaNombre);
-            if (materia != null) {
-                return materia.excedeCupo();
-            }
-        }
-        return false;
-    }
-
+ public boolean excedeCupo(String materiaNombre, String carreraNombre) {
+    Carrera carrera = carreras.obtenerDef(carreraNombre);
+    Materia materia = carrera.obtenerMateria(materiaNombre);
+    
+    return materia.excedeCupo();
+}
 /* 
  * Se busca la carrera en el trie de carreras, complejidad O(|c|)
  * Se busca la materia en el trie de la carrera, complejidad O(|m|)
@@ -166,37 +140,29 @@ public class SistemaSIU {
  * Complejidad esperada: O(|c|+|m|)
  */
 
-    public String[] carreras() {
-        List<String> listaCarreras = carreras.obtenerClaves();
-        return listaCarreras.toArray(new String[0]);
-    }
-
+ public String[] carreras() {
+    List<String> listaCarreras = carreras.obtenerClaves();
+    return listaCarreras.toArray(new String[0]);
+}
     /*
      * Obtener todas las claves del trie carreras tiene complejidad O(∑ c∈C ∣c∣),
      * Complejidad esperada: O(∑ c∈C ∣c∣)
      */
 
-    public String[] materias(String carreraNombre) {
+     public String[] materias(String carreraNombre) {
         Carrera carrera = carreras.obtenerDef(carreraNombre);
-        if (carrera != null) {
-            List<String> listaMaterias = carrera.listarMaterias();
-            return listaMaterias.toArray(new String[0]);
-        }
-        return new String[0];
+        List<String> listaMaterias = carrera.listarMaterias();
+        return listaMaterias.toArray(new String[0]);
     }
-
     /*
      * Obtener carrera del trie carreras trae complejidad O(|c|)
      * Obtener todas las claves del trie de la carrera tiene complejidad O(∑ mc∈Mc ∣mc∣)
      * Complejidad esperada:  O(∑ mc∈Mc ∣mc∣)
      */
 
-    public int materiasInscriptas(String estudianteLU) {
+     public int materiasInscriptas(String estudianteLU) {
         Estudiante estudiante = estudiantes.obtenerDef(estudianteLU);
-        if (estudiante != null) {
-            return estudiante.getMateriasInscriptas();
-        }
-        return 0;
+        return estudiante.getMateriasInscriptas();
     }
 }
 
