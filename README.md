@@ -6,7 +6,7 @@ El objetivo principal es modelar las operaciones típicas de una universidad (ca
 
 ---
 
-## 🚀 Características Principales
+##  Características Principales
 
 1. **Gestión de Carreras y Materias**: Permite estructurar las materias dentro de sus respectivas carreras.
 2. **Equivalencia de Materias**: Soporta que una misma materia física se dicte en múltiples carreras con nombres distintos (ej. *Álgebra I* en Matemática y *Álgebra* en Computación). Ambas comparten el mismo cupo, alumnos y plantel docente.
@@ -22,7 +22,7 @@ El objetivo principal es modelar las operaciones típicas de una universidad (ca
 
 ---
 
-## 🛠️ Estructura del Proyecto
+##  Estructura del Proyecto
 
 El código está organizado bajo el paquete `aed` y consta de los siguientes archivos clave:
 
@@ -34,7 +34,7 @@ El código está organizado bajo el paquete `aed` y consta de los siguientes arc
 
 ---
 
-## 📈 Análisis de Complejidad
+##  Análisis de Complejidad
 
 Para cumplir con las restricciones de rendimiento del trabajo práctico, todas las operaciones fueron diseñadas para respetar las siguientes cotas de complejidad temporal:
 
@@ -61,7 +61,7 @@ Para cumplir con las restricciones de rendimiento del trabajo práctico, todas l
 
 ---
 
-## 🔍 Invariantes de Representación (InvRep)
+##  Invariantes de Representación (InvRep)
 
 Cada componente clave posee invariantes de representación bien definidos para asegurar la consistencia del estado del sistema:
 
